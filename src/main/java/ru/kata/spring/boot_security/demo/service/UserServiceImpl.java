@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import com.springboot.dao.UserDao;
+
+import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,8 +40,8 @@ public class UserServiceImpl implements UserService{
 
         userDao.findById(id)
                 .ifPresent(u -> {u.setName(user.getName());
-                                    u.setSurname(user.getSurname());
-                                    u.setAge(user.getAge());});
+                                    u.setUsername(user.getUsername());
+                                    u.setPassword(user.getPassword());});
 
     }
 }
