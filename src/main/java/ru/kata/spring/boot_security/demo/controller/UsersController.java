@@ -17,7 +17,7 @@ public class UsersController {
         this.userService = userService;
     }
 
-   @RequestMapping(value = "/", method = RequestMethod.GET)
+   @RequestMapping(value = "/admin/main", method = RequestMethod.GET)
    public String mainTable(Model model){
 
         model.addAttribute("userlist", userService.getUserList());
@@ -27,7 +27,7 @@ public class UsersController {
     public String newUser(Model model){
         model.addAttribute("user", new User());
 
-        return "newUserForm";
+        return "admin/newUserForm";
     }
 
     @RequestMapping()

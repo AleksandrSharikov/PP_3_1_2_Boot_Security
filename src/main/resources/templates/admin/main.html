@@ -33,17 +33,17 @@
 <table>
   <tr style="font-size: 300%">
     <th>ID</th>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Age</th>
+    <th>Name</th>
+    <th>UserName</th>
+    <th>Password</th>
     <th></th>
   </tr>
   <th:block th:each="user : ${userlist}">
     <tr>
-      <td><a th:href="@{/{id}/edit(id=${user.getId()})}" th:text="${user.getId()}">Text</a></td>
-      <td><a th:href="@{/{id}/edit(id=${user.getId()})}" th:text="${user.getName()}">Text</a></td>
-      <td><a th:href="@{/{id}/edit(id=${user.getId()})}" th:text="${user.getUsermane)}">Text</a></td>
-      <td><a th:href="@{/{id}/edit(id=${user.getId()})}" th:text="${user.getPassword()}">Text</a></td>
+      <td><a th:href="@{/{id}/edit(id=${user.getId()})}" th:text="${user.getId()}">Id</a></td>
+      <td><a th:href="@{/{id}/edit(id=${user.getId()})}" th:text="${user.getName()}">Name</a></td>
+      <td><a th:href="@{/{id}/edit(id=${user.getId()})}" th:text="${user.getUsername()}">Username</a></td>
+      <td><a th:href="@{/{id}/edit(id=${user.getId()})}" th:text="${user.getPassword()}">Password</a></td>
 
       <td><form th:method="POST" th:action="@{/admin/{id}/delet(id=${user.getId()})}" th:object="${user}"><input type="submit" value="Delet"></form></td>
     </tr>
