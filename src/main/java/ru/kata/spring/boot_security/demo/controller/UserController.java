@@ -18,9 +18,15 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String editUser(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userService.getById(id));
+        return "user";
+    }
+
+    @PostMapping("/{id}")
+    public String updateUser(@ModelAttribute("user") User user){
+        userService.editUser(user, user.getId());
         return "user";
     }
 
