@@ -9,7 +9,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 @Controller
-@RequestMapping(value = "/")
+@RequestMapping(value = "/admin")
 public class AdminController {
     private UserService userService;
     @Autowired
@@ -17,39 +17,39 @@ public class AdminController {
         this.userService = userService;
     }
 
-   @RequestMapping(value = "/admin/main", method = RequestMethod.GET)
+   @RequestMapping(value = "/main", method = RequestMethod.GET)
    public String mainTable(Model model){
 
         model.addAttribute("userlist", userService.getUserList());
         return "/admin/main";
     }
-    @RequestMapping(value = "/admin/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newUser(Model model){
         model.addAttribute("user", new User());
 
         return "admin/newUserForm";
     }
 
-    @RequestMapping()
+    @RequestMapping("/")
     public String saveUser(@ModelAttribute("user") User user) {
         userService.addUser(user);
         return "redirect:/admin/main";
     }
 
 
-    @RequestMapping(value = "/admin/{id}/edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
     public String editUser(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userService.getById(id));
         return "admin/editUserForm";
     }
 
-    @PostMapping("/admin/{id}")
+    @PostMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user){
         userService.editUser(user, user.getId());
         return "redirect:/admin/main";
     }
 
-    @PostMapping("admin/{id}/delet")
+    @PostMapping("/{id}/delet")
     public String deleteUser(@PathVariable("id") int id) {
         userService.deletUser(id);
         return "redirect:/admin/main";

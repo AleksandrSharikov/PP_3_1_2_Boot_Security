@@ -34,5 +34,11 @@ public class TableInitialaser implements CommandLineRunner {
     admin.setRoles(Collections.singleton(new Role(2, "ROLE_ADMIN")));
     userDao.save(admin);
         System.out.println("Admin added");
+
+    User user = new User("user","user", "AnyName");
+    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    user.setRoles(Collections.singleton(new Role(1, "ROLE_USER")));
+    userDao.save(user);
+        System.out.println("User added");
     }
 }
