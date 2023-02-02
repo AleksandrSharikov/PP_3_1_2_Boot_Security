@@ -1,11 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
 
-
-
-//import jakarta.persistence.*;
-//import jakarta.persistence.Column;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,10 +8,12 @@ import javax.annotation.processing.Generated;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
-//import org.springframework.data.relational.core.mapping.*;
+
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+       // uniqueConstraints = {@UniqueConstraint(columnNames = {"username", "password"})})
+        uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

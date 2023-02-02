@@ -47,12 +47,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         user.setRoles(Collections.singleton(new Role(1, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        if(userDao.findUserByUsername(user.getUsername()) == null)
         userDao.save(user);
     }
 
     @Override
     public void editUser(User user, int id)  {
-
+        if(userDao.findUserByUsername(user.getUsername()) == null)
         userDao.findById(id)
                 .ifPresent(u -> {u.setName(user.getName());
                                     u.setUsername(user.getUsername());
