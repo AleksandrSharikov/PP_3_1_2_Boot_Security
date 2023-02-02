@@ -19,7 +19,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "password")
@@ -31,6 +31,7 @@ public class User implements UserDetails {
     @Column
     private String name;
 
+  //  @Column
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
@@ -79,7 +80,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.roles;
     }
 
     @Override

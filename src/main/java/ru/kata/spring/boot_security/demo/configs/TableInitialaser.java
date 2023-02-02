@@ -1,0 +1,38 @@
+package ru.kata.spring.boot_security.demo.configs;
+
+import ch.qos.logback.core.encoder.EchoEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
+import ru.kata.spring.boot_security.demo.dao.RoleDao;
+import ru.kata.spring.boot_security.demo.dao.UserDao;
+import ru.kata.spring.boot_security.demo.model.Role;
+import ru.kata.spring.boot_security.demo.model.User;
+
+import java.util.Collections;
+
+@Component
+public class TableInitialaser implements CommandLineRunner {
+    @Autowired
+    private RoleDao roleDao;
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Override
+    public void run(String... args) throws Exception {
+
+    roleDao.save(new Role(1,"ROLE_USER"));
+    roleDao.save(new Role(2,"ROLE_ADMIN"));
+        System.out.println("Roles done");
+    User admin = new User("admin","admin", "AnyName");
+    admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
+    admin.setRoles(Collections.singleton(new Role(2, "ROLE_ADMIN")));
+    userDao.save(admin);
+        System.out.println("Admin added");
+    }
+}

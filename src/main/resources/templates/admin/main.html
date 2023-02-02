@@ -40,10 +40,10 @@
   </tr>
   <th:block th:each="user : ${userlist}">
     <tr>
-      <td><a th:href="@{/{id}/edit(id=${user.getId()})}" th:text="${user.getId()}">Id</a></td>
-      <td><a th:href="@{/{id}/edit(id=${user.getId()})}" th:text="${user.getName()}">Name</a></td>
-      <td><a th:href="@{/{id}/edit(id=${user.getId()})}" th:text="${user.getUsername()}">Username</a></td>
-      <td><a th:href="@{/{id}/edit(id=${user.getId()})}" th:text="${user.getPassword()}">Password</a></td>
+      <td><a th:href="@{/admin/{id}/edit(id=${user.getId()})}" th:text="${user.getId()}">Id</a></td>
+      <td><a th:href="@{/admin/{id}/edit(id=${user.getId()})}" th:text="${user.getName()}">Name</a></td>
+      <td><a th:href="@{/admin/{id}/edit(id=${user.getId()})}" th:text="${user.getUsername()}">Username</a></td>
+      <td><a th:href="@{/admin/{id}/edit(id=${user.getId()})}" th:text="${user.getPassword()}">Password</a></td>
 
       <td><form th:method="POST" th:action="@{/admin/{id}/delet(id=${user.getId()})}" th:object="${user}"><input type="submit" value="Delet"></form></td>
     </tr>

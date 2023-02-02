@@ -10,10 +10,10 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 
 @Controller
 @RequestMapping(value = "/")
-public class UsersController {
+public class AdminController {
     private UserService userService;
     @Autowired
-    public UsersController(UserService userService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
     }
 
@@ -40,7 +40,7 @@ public class UsersController {
     @RequestMapping(value = "/admin/{id}/edit", method = RequestMethod.GET)
     public String editUser(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userService.getById(id));
-        return "editUserForm";
+        return "admin/editUserForm";
     }
 
     @PostMapping("/admin/{id}")
