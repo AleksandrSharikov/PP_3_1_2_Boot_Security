@@ -28,6 +28,14 @@
       <td><input type="text" th:field="*{password}" id="age"/></td>
     </tr>
     <tr>
+      <td><label for="name">Role</label></td>
+      <td><input type="checkbox" id="user" name="ubox" th:checked="${ubox}">
+        <label for="admin">User</label>
+        <input type="checkbox" id="admin" name="abox" th:checked="${abox}">
+        <label for="admin">Admin</label>
+      </td>
+    </tr>
+    <tr>
       <td colspan="2" style="text-align: end"><input type="submit" value="Save"></td>
     </tr>
   </table>

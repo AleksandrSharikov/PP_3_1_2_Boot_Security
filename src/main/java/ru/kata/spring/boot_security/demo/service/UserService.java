@@ -13,6 +13,5 @@ public interface UserService {
     void deletUser(int id);
     void addUser(User user);
     void editUser(User user, int id);
-    UserDetails loadUserByUsername(String username);
-    int findIdByUsername(String username);
+
 }

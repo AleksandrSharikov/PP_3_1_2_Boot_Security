@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 @Service
 @Transactional
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
     private RoleDao roleDao;
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void addUser(User user) {
 
-        user.setRoles(Collections.singleton(new Role(1, "ROLE_USER")));
+      //  user.setRoles(Collections.singleton(new Role(1, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         if(userDao.findUserByUsername(user.getUsername()) == null)
         userDao.save(user);
@@ -53,20 +53,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void editUser(User user, int id)  {
-        if(userDao.findUserByUsername(user.getUsername()) == null)
+        if(userDao.findUserByUsername(user.getUsername()) == null
+                 || userDao.findUserByUsername(user.getUsername()) == userDao.getById(id))
         userDao.findById(id)
                 .ifPresent(u -> {u.setName(user.getName());
                                     u.setUsername(user.getUsername());
-                                    u.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));});
+                                    u.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                                    u.setRoles(user.getRoles());});
 
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userDao.findUserByUsername(username);
-    }
-    public int findIdByUsername(String username){
-        return userDao.findUserByUsername(username).getId();
     }
 
 }

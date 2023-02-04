@@ -27,11 +27,20 @@
             <td><label for="name">Password</label></td>
             <td><input type="text" th:field="*{password}" id="age"/></td>
         </tr>
+        <tr>
+            <td><label for="name">Role</label></td>
+            <td><input type="checkbox" id="user" name="ubox" checked>
+            <label for="admin">User</label>
+            <input type="checkbox" id="admin" name="abox">
+            <label for="admin">Admin</label>
+            </td>
+        </tr>
     <tr>
         <td colspan="2" style="text-align: end"><input type="submit" value="Save"></td>
     </tr>
     </table>
 
     <a href="/logout">logout</a>
+</form>
 </body>
 </html>

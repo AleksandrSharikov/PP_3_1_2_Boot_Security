@@ -30,6 +30,7 @@ public class User implements UserDetails {
 
   //  @Column
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
     private Set<Role> roles;
 
 

@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -12,7 +14,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import java.util.Collections;
 
 @Component
-public class TableInitializer implements CommandLineRunner {
+public class TableInitializer implements ApplicationRunner {
     @Autowired
     private RoleDao roleDao;
     @Autowired
@@ -22,11 +24,14 @@ public class TableInitializer implements CommandLineRunner {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(ApplicationArguments args) throws Exception {
 
     roleDao.save(new Role(1,"ROLE_USER"));
     roleDao.save(new Role(2,"ROLE_ADMIN"));
         System.out.println("Roles done");
+
+
+
     User admin = new User("admin","admin", "AnyName");
     admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
     admin.setRoles(Collections.singleton(new Role(2, "ROLE_ADMIN")));

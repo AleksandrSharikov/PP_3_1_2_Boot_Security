@@ -23,7 +23,7 @@ public class UserController {
     @GetMapping(value = "/")
     public String editUser(Model model) {
         Authentication aut = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("user", userService.loadUserByUsername(aut.getName()));
+        model.addAttribute("user", (User)aut.getPrincipal());
         return "user";
     }
 
