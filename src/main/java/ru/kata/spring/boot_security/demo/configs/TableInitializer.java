@@ -19,60 +19,34 @@ import java.util.Collections;
 
 @Component
 public class TableInitializer implements ApplicationRunner {
-   /* @Autowired
+   @Autowired
     private UserService userService;
     @Autowired
-    private RoleService roleService;*/
-
-    @Autowired
-    private UserDao userDao;
-    @Autowired
-    private RoleDao roleDao;
+    private RoleService roleService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-/*
+
     roleService.addRole(new Role(1,"ROLE_USER"));
     roleService.addRole(new Role(2,"ROLE_ADMIN"));
         System.out.println("Roles done");
 
 
-
     User admin = new User("admin","admin", "AdminsName");
-    admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
     admin.setRoles(Collections.singleton(new Role(2, "ROLE_ADMIN")));
     admin.setId(1);
     userService.addUser(admin);
         System.out.println("Admin added");
 
     User user = new User("user","user", "UsersName");
-    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
     user.setRoles(Collections.singleton(new Role(1, "ROLE_USER")));
     user.setId(2);
     userService.addUser(user);
-        System.out.println("User added");*/
-
-        roleDao.save(new Role(1,"ROLE_USER"));
-        roleDao.save(new Role(2,"ROLE_ADMIN"));
-        System.out.println("Roles done");
-
-
-
-        User admin = new User("admin","admin", "AdminsName");
-        admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
-        admin.setRoles(Collections.singleton(new Role(2, "ROLE_ADMIN")));
-        admin.setId(1);
-        userDao.save(admin);
-        System.out.println("Admin added");
-
-        User user = new User("user","user", "UsersName");
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(Collections.singleton(new Role(1, "ROLE_USER")));
-        user.setId(2);
-        userDao.save(user);
         System.out.println("User added");
+
+
     }
 }
