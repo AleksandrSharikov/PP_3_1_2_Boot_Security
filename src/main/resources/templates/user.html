@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="ru">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang = "ru">
 <style>
     table {font-size: 250%}
     input {font-size: 125%}
@@ -20,12 +21,12 @@
         </tr>
 
         <tr>
-            <td><label for="name">Username</label></td>
-            <td><input type="text" th:field="*{username}" id="surname"/></td>
+            <td><label for="username">Username</label></td>
+            <td><input type="text" th:field="*{username}" id="username"/></td>
         </tr>
         <tr>
-            <td><label for="name">New password</label></td>
-            <td><input type="text" th:field="*{password}" id="age"/></td>
+            <td><label for="pass">New password</label></td>
+            <td><input type="text" th:field="*{password}" id="pass"/></td>
         </tr>
         <tr>
             <td colspan="2" style="text-align: end"><input type="submit" value="Save"></td>
