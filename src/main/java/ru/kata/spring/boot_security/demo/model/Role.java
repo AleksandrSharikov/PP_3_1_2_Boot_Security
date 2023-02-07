@@ -8,7 +8,7 @@ import java.util.Set;
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
-    private int id;
+    private Long id;
     private String name;
     //@Transient
     @ManyToMany(mappedBy = "roles")
@@ -17,11 +17,11 @@ public class Role implements GrantedAuthority {
     // Constructors
     public Role() {    }
 
-    public Role(int id) {
+    public Role(Long id) {
         this.id = id;
     }
 
-    public Role(int id, String name) {
+    public Role(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -30,11 +30,11 @@ public class Role implements GrantedAuthority {
     //Geters & Setters
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -80,8 +80,8 @@ public class Role implements GrantedAuthority {
 
     @Override
     public int hashCode() {
-        int result = getId();
-        result = 31 * result + getName().hashCode();
+        int result = getId().hashCode();
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         return result;
     }
 }

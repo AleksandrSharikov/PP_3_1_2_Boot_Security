@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
@@ -32,21 +31,17 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     @Override
     public List<User> getUserList() {
-        System.out.println("list");
         return userDao.findAll();
-
     }
 
     @Override
     @Transactional(readOnly = true)
-    public User getById(int id) {
-        System.out.println("User");
+    public User getById(Long id) {
         return userDao.getById(id);
-
     }
 
     @Override
-    public void deletUser(int id) {
+    public void deletUser(Long id) {
         userDao.deleteById(id);
     }
 
@@ -54,19 +49,22 @@ public class UserServiceImpl implements UserService {
     public void addUser(User user) {
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        if(userDao.findUserByUsername(user.getUsername()) == null)
-        userDao.save(user);
+        if(userDao.findUserByUsername(user.getUsername()) == null) {
+            userDao.save(user);
+        }
     }
 
     @Override
-    public void editUser(User user, int id)  {
+    @Transactional
+    public void editUser(User user, Long id)  {
+        System.out.println("edit in");
         if(userDao.findUserByUsername(user.getUsername()) == null
-                 || userDao.findUserByUsername(user.getUsername()) == userDao.getById(id))
+                 || userDao.findUserByUsername(user.getUsername()).equals(userDao.getById(id))) {
         userDao.findById(id)
                 .ifPresent(u -> {u.setName(user.getName());
                                     u.setUsername(user.getUsername());
                                     u.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-                                    u.setRoles(user.getRoles());});
+                                    u.setRoles(user.getRoles());});}
 
     }
 

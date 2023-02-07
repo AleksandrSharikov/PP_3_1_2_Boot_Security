@@ -7,7 +7,6 @@ import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 
 @Service
-@Transactional
 public class RoleServiceImpl implements RoleService{
     private RoleDao roleDao;
 
@@ -16,4 +15,9 @@ public class RoleServiceImpl implements RoleService{
 
     @Override
     public void addRole(Role role) { roleDao.save(role);}
+
+    @Override
+    public Role getRoleById(Long id) {
+        return roleDao.getById(id);
+    }
 }

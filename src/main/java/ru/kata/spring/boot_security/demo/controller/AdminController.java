@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.HashSet;
@@ -16,9 +17,11 @@ import java.util.Set;
 @RequestMapping(value = "/admin")
 public class AdminController {
     private UserService userService;
+    private RoleService roleService;
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
    @GetMapping(value = "/main")
@@ -41,10 +44,12 @@ public class AdminController {
                 @ModelAttribute("abox") String abox,
                 @ModelAttribute("ubox") String ubox)  {
         Set<Role> roleSet = new HashSet<>();
-        if(abox.equals("on"))
-            roleSet.add(new Role(2,"ROLE_ADMIN"));
-        if(ubox.equals("on"))
-            roleSet.add(new Role(1,"ROLE_USER"));
+        if(abox.equals("on")) {
+            roleSet.add(new Role(2L,"ROLE_ADMIN"));
+        }
+        if(ubox.equals("on")) {
+            roleSet.add(new Role(1L,"ROLE_USER"));
+        }
         user.setRoles(roleSet);
         userService.addUser(user);
         return "redirect:/admin/main";
@@ -52,13 +57,15 @@ public class AdminController {
 
 
     @GetMapping(value = "/{id}/edit")
-    public String editUser(@PathVariable("id") int id, Model model) {
+    public String editUser(@PathVariable("id") Long id, Model model) {
         User tmpUser = userService.getById(id);
         model.addAttribute("user", tmpUser);
-        if(tmpUser.getRoles().contains(new Role(1,"ROLE_USER")))
+        if(tmpUser.getRoles().contains(new Role(1L,"ROLE_USER"))){
             model.addAttribute("ubox", true);
-        if(tmpUser.getRoles().contains(new Role(2,"ROLE_ADMIN")))
+            }
+        if(tmpUser.getRoles().contains(new Role(2L,"ROLE_ADMIN"))){
             model.addAttribute("abox",true);
+            }
 
         return "admin/editUserForm";
     }
@@ -68,17 +75,20 @@ public class AdminController {
                              @ModelAttribute("abox") String abox,
                              @ModelAttribute("ubox") String ubox) {
         Set<Role> roleSet = new HashSet<>();
-        if(abox.equals("on"))
-            roleSet.add(new Role(2,"ROLE_ADMIN"));
-        if(ubox.equals("on"))
-            roleSet.add(new Role(1,"ROLE_USER"));
+        if(abox.equals("on")){
+            roleSet.add(new Role(2L,"ROLE_ADMIN"));
+            }
+        if(ubox.equals("on")){
+            roleSet.add(new Role(1L,"ROLE_USER"));
+            }
+        System.out.println(roleSet);
         user.setRoles(roleSet);
         userService.editUser(user, user.getId());
         return "redirect:/admin/main";
     }
 
     @PostMapping("/{id}/delet")
-    public String deleteUser(@PathVariable("id") int id) {
+    public String deleteUser(@PathVariable("id") Long id) {
         userService.deletUser(id);
         return "redirect:/admin/main";
     }
