@@ -29,7 +29,7 @@ public class User implements UserDetails {
     private String name;
 
   //  @Column
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     private Set<Role> roles;
 

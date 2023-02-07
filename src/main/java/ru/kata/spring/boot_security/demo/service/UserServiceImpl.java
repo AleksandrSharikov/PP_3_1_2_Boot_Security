@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,14 +28,21 @@ public class UserServiceImpl implements UserService {
         this.roleDao = roleDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+
+    @Transactional(readOnly = true)
     @Override
     public List<User> getUserList() {
+        System.out.println("list");
         return userDao.findAll();
+
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getById(int id) {
+        System.out.println("User");
         return userDao.getById(id);
+
     }
 
     @Override
@@ -45,7 +53,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUser(User user) {
 
-      //  user.setRoles(Collections.singleton(new Role(1, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         if(userDao.findUserByUsername(user.getUsername()) == null)
         userDao.save(user);
