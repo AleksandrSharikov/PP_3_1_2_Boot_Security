@@ -3,31 +3,31 @@ package ru.kata.spring.boot_security.demo.configs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.kata.spring.boot_security.demo.dao.RoleDao;
-import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
-import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
-import ru.kata.spring.boot_security.demo.service.UserDetailsServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.Collections;
 
 @Component
 public class TableInitializer implements ApplicationRunner {
-   @Autowired
-    private UserService userService;
-    @Autowired
-    private RoleService roleService;
+   private final UserService userService;
+    private final RoleService roleService;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+ public TableInitializer(UserService userService, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+  this.userService = userService;
+  this.roleService = roleService;
+  this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+ }
 
-    @Override
+
+ @Override
     public void run(ApplicationArguments args) throws Exception {
 
     roleService.addRole(new Role(1L,"ROLE_USER"));

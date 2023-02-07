@@ -4,7 +4,6 @@ package ru.kata.spring.boot_security.demo.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.annotation.processing.Generated;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
@@ -12,7 +11,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users",
-       // uniqueConstraints = {@UniqueConstraint(columnNames = {"username", "password"})})
         uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class User implements UserDetails {
     @Id
@@ -28,9 +26,8 @@ public class User implements UserDetails {
     @Column
     private String name;
 
-  //  @Column
+
     @ManyToMany(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "role_id")
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

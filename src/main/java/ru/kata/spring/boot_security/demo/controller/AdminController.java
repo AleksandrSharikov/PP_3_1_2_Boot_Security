@@ -17,11 +17,9 @@ import java.util.Set;
 @RequestMapping(value = "/admin")
 public class AdminController {
     private UserService userService;
-    private RoleService roleService;
     @Autowired
-    public AdminController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
     }
 
    @GetMapping(value = "/main")
