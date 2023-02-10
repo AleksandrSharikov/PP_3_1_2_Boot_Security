@@ -13,7 +13,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import java.util.HashSet;
 import java.util.Set;
 
-@Controller
+@RestController
 @RequestMapping(value = "/admin")
 public class AdminController {
     private UserService userService;

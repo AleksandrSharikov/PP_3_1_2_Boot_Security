@@ -14,37 +14,37 @@ import java.util.Collections;
 
 @Component
 public class TableInitializer implements ApplicationRunner {
-   private final UserService userService;
+    private final UserService userService;
     private final RoleService roleService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
- public TableInitializer(UserService userService, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-  this.userService = userService;
-  this.roleService = roleService;
-  this.bCryptPasswordEncoder = bCryptPasswordEncoder;
- }
+    public TableInitializer(UserService userService, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
 
- @Override
+    @Override
     public void run(ApplicationArguments args) throws Exception {
 
-    roleService.addRole(new Role(1L,"ROLE_USER"));
-    roleService.addRole(new Role(2L,"ROLE_ADMIN"));
+        roleService.addRole(new Role(1L, "ROLE_USER"));
+        roleService.addRole(new Role(2L, "ROLE_ADMIN"));
         System.out.println("Roles done");
 
 
-    User admin = new User("admin","admin", "AdminsName");
-    admin.setRoles(Collections.singleton(new Role(2L, "ROLE_ADMIN")));
-    admin.setId(1L);
-    userService.addUser(admin);
+        User admin = new User("admin", "admin", "AdminsName");
+        admin.setRoles(Collections.singleton(new Role(2L, "ROLE_ADMIN")));
+        admin.setId(1L);
+        userService.addUser(admin);
         System.out.println("Admin added");
 
-    User user = new User("user","user", "UsersName");
-    user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
-    user.setId(2L);
-    userService.addUser(user);
+        User user = new User("user", "user", "UsersName");
+        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+        user.setId(2L);
+        userService.addUser(user);
         System.out.println("User added");
 
 
