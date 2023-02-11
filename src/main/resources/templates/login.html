@@ -9,44 +9,50 @@
     <title>Loign page</title>
 
     <link href="/style.css" rel="stylesheet" type="text/css" media="all"/>
- <!--   <style>
+    <style>
         .center {
             margin-left: auto;
             margin-right: auto;
         }
         body {
-            background-color: lightblue;
+            background-color:rgb(229, 235, 241);
         }
 
         h1 {
             color: navy;
             margin-left: 20px;
         }
+        a {font-size: 200%;
+            font: bold;
+            font-family:Arial, Helvetica, sans-serif;}
+        .button1 {width: 94%; margin-left: 3%; margin-right: 3% ;}
+        .impField {size: 35%;}
 
-    </style> -->
+    </style>
 
 </head>
 <body>
 
-<form name='f' action="login" method='POST' class="form-group">
-    <div th:bgcolor="C">
-    <table class="center">
-        <thead class="table-header">
-        Please sing in
-        </thead>
-        <tr>
-          <td><input type='text' name='username' value='' placeholder="email addres"></td>
-        </tr>
-        <tr>
-          <td><input type='password' name='password' placeholder="password"/></td>
-        </tr>
-        <tr>
-            <td>
-            <button type="submit" class="btn btn-primary">Sign in</button>
-            </td>
-        </tr>
+<form name='f' th:action="@{/login}" method='post' class="form-group">
+    <div style="width: min-content; margin-left: auto;margin-right: auto;" >
+        <table>
+            <thead>
+            <a>Please sing in</a>
+            </thead>
+            <tr>
+                <td class="impField"><input type='text' id="username" name='username' value='' placeholder="email addres" size="35%"></td>
+            </tr>
+            <tr>
+                <td><input type='password' id="password" name='password' placeholder="password" size="35%"/></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" class="btn btn-primary button1">Sign in</button>
+                </td>
+            </tr>
 
-    </table>
+
+        </table>
     </div>
 </form>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
