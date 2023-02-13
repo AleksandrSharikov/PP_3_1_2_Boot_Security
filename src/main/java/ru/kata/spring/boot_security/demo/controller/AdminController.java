@@ -10,24 +10,32 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-//@RestController
-@Controller
+@RestController
+//@Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
     private UserService userService;
+    private RoleService roleService;
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
    @GetMapping(value = "/main")
-   public String mainTable(Model model){
-
-        model.addAttribute("userlist", userService.getUserList());
-        return "/admin/main";
+   public List<User> allUsers(){
+      User user = new User("test","test","test");
+       System.out.println(userService.getUserList().get(0));
+       System.out.println(userService.getUserList().get(1));
+       User user2 = userService.getUserList().get(0);
+       user.setPassword(user2.getPassword());
+       user.setRoles(user2.getRoles());
+        return userService.getUserList();
     }
     @GetMapping(value = "/new")
     public String newUser(Model model){

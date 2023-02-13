@@ -6,18 +6,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 
 @Entity
 @Table(name = "users",
         uniqueConstraints = @UniqueConstraint(columnNames = "username"))
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "password")
+   // @Transient
     private String password;
 
     @Column(name = "username")
@@ -110,5 +113,16 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

@@ -11,6 +11,7 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.Collections;
+import java.util.List;
 
 @Component
 public class TableInitializer implements ApplicationRunner {
