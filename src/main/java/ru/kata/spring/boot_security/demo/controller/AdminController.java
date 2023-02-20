@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
@@ -28,65 +29,41 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-   @GetMapping(value = "/main")
-   public List<User> allUsers(){
+   @RequestMapping(value = "/main")
+   public ModelAndView mainPage(){
+       ModelAndView modelAndView = new ModelAndView();
+       modelAndView.setViewName("/admin/main");
+       return modelAndView;
+    }
 
+    @RequestMapping(value = "/userForm")
+    public ModelAndView userForm(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/admin/newForm");
+        return modelAndView;
+    }
+
+    @GetMapping("/")
+    public List<User> getList() {
+        System.out.println("Get list");
         return userService.getUserList();
     }
-    @GetMapping(value = "/new")
-    public String newUser(Model model){
-        model.addAttribute("user", new User());
-        model.addAttribute("abox");
-        model.addAttribute("ubox");
+    //            consumes = MediaType.APPLICATION_JSON_VALUE,
+    //            produces = MediaType.APPLICATION_JSON_VALUE
 
-        return "admin/newUserForm";
-    }
-
-    @PostMapping(path = "/",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/")
     public void create(@RequestBody User newUser) {
         System.out.println("create");
         userService.addUser(newUser);
     }
 
-
-    @GetMapping(value = "/{id}/edit")
-    public String editUser(@PathVariable("id") Long id, Model model) {
-        User tmpUser = userService.getById(id);
-        model.addAttribute("user", tmpUser);
-        if(tmpUser.getRoles().contains(new Role(1L,"ROLE_USER"))){
-            model.addAttribute("ubox", true);
-            }
-        if(tmpUser.getRoles().contains(new Role(2L,"ROLE_ADMIN"))){
-            model.addAttribute("abox",true);
-            }
-
-        return "admin/editUserForm";
-    }
-
-    @PostMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") User user,
-                             @ModelAttribute("abox") String abox,
-                             @ModelAttribute("ubox") String ubox) {
-        Set<Role> roleSet = new HashSet<>();
-        if(abox.equals("on")){
-            roleSet.add(new Role(2L,"ROLE_ADMIN"));
-            }
-        if(ubox.equals("on")){
-            roleSet.add(new Role(1L,"ROLE_USER"));
-            }
-        System.out.println(roleSet);
-        user.setRoles(roleSet);
-        userService.editUser(user, user.getId());
-        return "redirect:/admin/main";
-    }
-
-    @PostMapping("/{id}/delet")
-    public String deleteUser(@PathVariable("id") Long id) {
+    @DeleteMapping(path = "/{id}")
+    public String deletUser(@PathVariable Long id) {
         userService.deletUser(id);
-        return "redirect:/admin/main";
+        System.out.println("Delete");
+        return "Deleted";
     }
+
 
 
 }

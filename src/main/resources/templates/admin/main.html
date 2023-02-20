@@ -1,63 +1,25 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
-
-<style>
-  a {font-size: 250%}
-  p {font-size: 250%}
-  a {display: inline}
-  b {font-size: 250%}
-  b {color: red}
-  table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-  }
-  table{text-align: center}
-  table
-  {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  p {text-align: center}
-
-
-</style>
-
 <head>
-  <meta charset="UTF-8">
-  <title charset="UTF-8">Список пользователей</title>
-
+  <title>main table</title>
+  <link href="/style.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
+<body>
+  <div id="data-table" style="text-align: center">
+    <table id="html-data-table">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Edit</th>
+        <th>Delet</th>
+      </tr>
+    </table>
 
-<p charset="UTF-8">Список пользователей</p>
-<table>
-  <tr style="font-size: 300%">
-    <th>ID</th>
-    <th>Name</th>
-    <th>UserName</th>
-    <th>Roles</th>
-    <th></th>
-  </tr>
-  <th:block th:each="user : ${userlist}">
-    <tr>
-      <td><a th:href="@{/admin/{id}/edit(id=${user.getId()})}" th:text="${user.getId()}">Id</a></td>
-      <td><a th:href="@{/admin/{id}/edit(id=${user.getId()})}" th:text="${user.getName()}">Name</a></td>
-      <td><a th:href="@{/admin/{id}/edit(id=${user.getId()})}" th:text="${user.getUsername()}">Username</a></td>
-      <td><a th:href="@{/admin/{id}/edit(id=${user.getId()})}" th:text="${user.getRoles()}">Password</a></td>
+  <p>
 
-      <td><form th:method="POST" th:action="@{/admin/{id}/delet(id=${user.getId()})}" th:object="${user}"><input type="submit" value="Delet"></form></td>
-    </tr>
-  </th:block>
-  <tr>
-    <td></td>
-    <td colspan="2">
-      <a th:href="@{/admin/new}" style="color:green">Add user</a>
-    </td>
-    <td colspan="2"></td>
-  </tr>
-</table>
-<a href="/logout">logout</a>
-
-
+    <button name="add" onclick="addUser()">Add</button>
+  </div>
 </body>
+<script src="/script.js" type="text/javascript"></script>
 </html>

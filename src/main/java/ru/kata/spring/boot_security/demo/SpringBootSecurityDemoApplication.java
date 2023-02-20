@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo;
 
+import net.bytebuddy.build.ToStringPlugin;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

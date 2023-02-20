@@ -1,13 +1,12 @@
-@charset "UTF-8";
-.center {
-    margin-left: auto;
-    margin-right: auto;
-}
 body {
-    background-color: lightblue;
+    background:rgb(229, 235, 241);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
-h1 {
-    color: navy;
-    margin-left: 20px;
+.center {
+    background: rgb(236, 224, 208);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
