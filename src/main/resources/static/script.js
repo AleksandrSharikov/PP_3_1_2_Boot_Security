@@ -83,7 +83,7 @@ function delet(id) {
 
 function addUser() {
     console.log('add')
-    let myWindow = window.open(URL + "userForm", "NewUser", "width=500,height=700,popup");
+  //  let myWindow = window.open(URL + "userForm", "NewUser", "width=500,height=700,popup");
 
 
 }
