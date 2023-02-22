@@ -20,9 +20,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
     @Column(name = "password")
-   // @Transient
     private String password;
 
     @Column(name = "username")
@@ -31,7 +29,6 @@ public class User implements UserDetails {
     @Column
     private String name;
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",

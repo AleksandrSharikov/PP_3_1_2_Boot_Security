@@ -3,20 +3,13 @@ package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/admin")
@@ -40,7 +33,15 @@ public class AdminController {
     public ModelAndView userForm(){
         System.out.println("UserForm");
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/admin/new");
+        modelAndView.setViewName("/admin/newUser");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/{id}")
+    public ModelAndView userForm(@PathVariable Long id){
+        System.out.println("EditForm");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/admin/editUser");
         return modelAndView;
     }
 
@@ -48,6 +49,12 @@ public class AdminController {
     public List<User> getList() {
         System.out.println("Get list");
         return userService.getUserList();
+    }
+
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable Long id) {
+        System.out.println("Get user");
+        return userService.getById(id);
     }
 
 

@@ -1,10 +1,18 @@
 let URL = 'http://localhost:8080/admin/';
 
-console.log('log');
-let user = {password:"",name:"",username:""};
-let name1;
-let username;
+userResp = fetch(URL + idEdit)
+    .then(function (response) {
+        return response.json();
+    })
+
+let user = {password:"",name:"",username:"",roles};
+user.roles = userResp.roles;
+user.name = userResp.name;
+user.username = userResp.username
+
 let password;
+let userCheck;
+let adminCheck;
 function newUserForm() {
 
 
@@ -16,7 +24,9 @@ function newUserForm() {
 
     const tr = tbl.insertRow();
     const td = tr.insertCell();
+
     td.appendChild(document.createTextNode('Name'))
+    td.textContent = user.name;
     const td1 = tr.insertCell();
     td1.appendChild(name1 = document.createElement("input"));
 
@@ -32,6 +42,20 @@ function newUserForm() {
     const td5 = tr3.insertCell();
     td5.appendChild(password = document.createElement("input"));
 
+
+    const trCheck = tbl.insertRow();
+    userCheck = document.createElement('input')
+    userCheck.type = "checkbox";
+    userCheck.checked = true;
+    let tdUser = trCheck.insertCell();
+    tdUser.appendChild(userCheck);
+
+//    const trCheck = tbl.insertRow();
+    adminCheck = document.createElement('input')
+    adminCheck.type = "checkbox";
+    let tdAdmin = trCheck.insertCell();
+    tdAdmin.appendChild(adminCheck);
+
     const trB = tbl.insertRow();
     let btn = document.createElement('input');
     btn.type = "button";
@@ -41,6 +65,8 @@ function newUserForm() {
     btn.style.color = "white";
     btn.onclick = function () {
         newUser();
+
+        // close();
     };
     let tdb = trB.insertCell();
     tdb.appendChild(btn);
@@ -53,6 +79,11 @@ function newUser() {
     user.name = name1.value;
     user.username = username.value;
     user.password = password.value;
+    if(userCheck.checked)
+        roles.push({"id":1,"name": "ROLE_USER"});
+    if(adminCheck.checked)
+        roles.push({"id":2,"name": "ROLE_ADMIN"});
+    user.roles = roles;
     console.log(user);
 
     fetch(URL, {
@@ -63,5 +94,6 @@ function newUser() {
         },
         body: JSON.stringify(user)
     }).then(response=>console.log(response));
+
 
 }

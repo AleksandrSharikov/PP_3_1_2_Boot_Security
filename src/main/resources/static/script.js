@@ -1,4 +1,7 @@
 console.log("Ok");
+
+ top.idEdit;
+
 let URL = 'http://localhost:8080/admin/';
 
 
@@ -73,6 +76,7 @@ function tableCreate(userSet) {
 }
 
 function edit(id) {
+    idEdit = id;
     console.log(id);
 }
 
