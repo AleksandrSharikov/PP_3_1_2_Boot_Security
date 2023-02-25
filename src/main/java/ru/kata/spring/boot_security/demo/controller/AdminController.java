@@ -37,12 +37,14 @@ public class AdminController {
         return modelAndView;
     }
 
+
+    // Edit form
     @RequestMapping(value = "/{id}")
     public ModelAndView userForm(@PathVariable Long id){
         System.out.println("EditForm");
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/admin/editUser");
-        return modelAndView;
+        ModelAndView modelAndView2 = new ModelAndView();
+        modelAndView2.setViewName("/admin/editUser");
+        return modelAndView2;
     }
 
     @GetMapping("/")
@@ -51,11 +53,11 @@ public class AdminController {
         return userService.getUserList();
     }
 
-    @GetMapping("/{id}")
+   /* @GetMapping("/{id}")
     public User getUser(@PathVariable Long id) {
         System.out.println("Get user");
         return userService.getById(id);
-    }
+    }*/
 
 
     @PostMapping(path = "/",
@@ -74,7 +76,13 @@ public class AdminController {
         System.out.println("Delete");
         return "Deleted";
     }
-
+    @PutMapping(path = "/{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE    )
+    public String editUser(@PathVariable Long id, @RequestBody User editUser){
+        userService.editUser(editUser,id);
+        return null;
+    }
 
 
 }

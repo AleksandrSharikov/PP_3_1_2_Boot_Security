@@ -1,15 +1,11 @@
 let URL = 'http://localhost:8080/admin/';
 
-userResp = fetch(URL + idEdit)
-    .then(function (response) {
-        return response.json();
-    })
+console.log('log');
 
+let roles = [];
 let user = {password:"",name:"",username:"",roles};
-user.roles = userResp.roles;
-user.name = userResp.name;
-user.username = userResp.username
-
+let name1;
+let username;
 let password;
 let userCheck;
 let adminCheck;
@@ -24,9 +20,7 @@ function newUserForm() {
 
     const tr = tbl.insertRow();
     const td = tr.insertCell();
-
     td.appendChild(document.createTextNode('Name'))
-    td.textContent = user.name;
     const td1 = tr.insertCell();
     td1.appendChild(name1 = document.createElement("input"));
 

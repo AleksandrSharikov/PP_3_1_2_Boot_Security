@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void editUser(User user, Long id)  {
         System.out.println("edit in");
+        System.out.println(user);
         if(userDao.findUserByUsername(user.getUsername()) == null
                  || userDao.findUserByUsername(user.getUsername()).equals(userDao.getById(id))) {
         userDao.findById(id)
