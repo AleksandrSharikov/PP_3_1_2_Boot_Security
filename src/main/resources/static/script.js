@@ -1,6 +1,3 @@
-console.log("Ok");
-
- top.idEdit;
 
 
 const body = document.body,
@@ -29,7 +26,7 @@ function mainPage() {
     })
 }
 
-// main table  create funktion
+// main table  create function
 
 function tableCreate(userSet) {
 
@@ -37,10 +34,7 @@ function tableCreate(userSet) {
     tbl.style.width = '100px';
     tbl.style.border = '1px solid black';
 
-    userSet.forEach(userDat => {
-        addUserRow(userDat);
 
-    })
     const tr = tbl.insertRow();
 
     let btn = document.createElement('input');
@@ -50,38 +44,31 @@ function tableCreate(userSet) {
     btn.style.backgroundColor = "orange";
     btn.style.color = "white";
     btn.onclick = function () {
-        addUser();
+        newUserForm();
     };
     let td = tr.insertCell();
     td.appendChild(btn);
 
+    userSet.forEach(userDat => {
+        addUserRow(userDat);
 
-
+    })
     body.appendChild(tbl);
 }
 
-function edit(user) {
 
-    window.open(URL + "form", "NewUser", "left=500,top=200,width=300,height=200,popup");
-    newUserForm(user);
-  //  fetch(URL+id);
-    console.log(id);
-}
 
 function delet(id) {
     console.log('del');
     fetch(URL + id, {method: 'DELETE'});
 }
 
-function addUser() {
-    console.log('add')
-    window.open(URL + "form", "NewUser", "left=500,top=200,width=300,height=200,popup");
-}
 
 
-
-function addUserRow(userDat) {
-    const tr = tbl.insertRow();
+function addUserRow(userDat,row) {
+    if(row==null)
+        row=tbl.rows.length - 1;
+    const tr = tbl.insertRow(row);
 
     const td = tr.insertCell();
     td.appendChild(document.createTextNode(userDat.id));
@@ -97,8 +84,8 @@ function addUserRow(userDat) {
     btn.style.backgroundColor = "green";
     btn.style.color = "white";
     btn.onclick = function () {
-
-        edit(userDat)
+        newUserForm(userDat);
+        tr.remove();
     };
     let td3 = tr.insertCell();
     td3.appendChild(btn);
@@ -110,7 +97,8 @@ function addUserRow(userDat) {
     btnD.style.backgroundColor = "red";
     btnD.style.color = "white";
     btnD.onclick = function () {
-        delet(userDat.id)
+        delet(userDat.id);
+        tr.remove();
     };
     let td4 = tr.insertCell();
     td4.appendChild(btnD);
@@ -128,8 +116,6 @@ function addUserRow(userDat) {
                 td3.style.backgroundColor =
                     td4.style.backgroundColor
                         = "white";
-
-
 }
 
 
@@ -142,24 +128,24 @@ function newUserForm(userIn) {
 
     console.log('form');
     const body = document.body,
-        tbl = document.createElement('table');
-    tbl.style.width = '100px';
-    tbl.style.border = '1px solid black';
+        form = document.createElement('table');
+    form.style.width = '100px';
+    form.style.border = '1px solid black';
 
-    const tr = tbl.insertRow();
+    const tr = form.insertRow();
     const td = tr.insertCell();
     td.appendChild(document.createTextNode('Name'))
     const td1 = tr.insertCell();
     td1.appendChild(name1 = document.createElement("input"));
 
-    const tr2 = tbl.insertRow();
+    const tr2 = form.insertRow();
     const td2 = tr2.insertCell();
     td2.appendChild(document.createTextNode('Username'))
     const td3 = tr2.insertCell();
     td3.appendChild(username = document.createElement("input"));
 
 
-    const tr3 = tbl.insertRow();
+    const tr3 = form.insertRow();
     const td4 = tr3.insertCell();
     td4.appendChild(document.createTextNode('Password'))
     const td5 = tr3.insertCell();
@@ -168,20 +154,20 @@ function newUserForm(userIn) {
 
 
 
-    const trCheck = tbl.insertRow();
+    const trCheck = form.insertRow();
     userCheck = document.createElement('input')
     userCheck.type = "checkbox";
     userCheck.checked = true;
     let tdUser = trCheck.insertCell();
     tdUser.appendChild(userCheck);
 
-//    const trCheck = tbl.insertRow();
+//    const trCheck = form.insertRow();
     adminCheck = document.createElement('input')
     adminCheck.type = "checkbox";
     let tdAdmin = trCheck.insertCell();
     tdAdmin.appendChild(adminCheck);
 
-    const trB = tbl.insertRow();
+    const trB = form.insertRow();
     let btn = document.createElement('input');
     btn.type = "button";
     btn.className = "btn";
@@ -190,7 +176,8 @@ function newUserForm(userIn) {
     btn.style.color = "white";
     btn.onclick = function () {
         newUser();
-        //close();
+        form.parentNode.removeChild(form);
+
     };
 
 
@@ -198,14 +185,13 @@ function newUserForm(userIn) {
         username.value = userIn.username;
         password.value = userIn.password;
         name1.value = userIn.name;
-        if (userIn.roles.includes({"id": 1, "name": "ROLE_USER"}))
-            userCheck.checked = true;
-        if (userIn.roles.includes({"id": 2, "name": "ROLE_ADMIN"}))
-            userCheck.checked = true;
+
+        userCheck.checked = userIn.roles.some(e => e.name === "ROLE_USER");
+        adminCheck.checked = userIn.roles.some( e => e.name === "ROLE_ADMIN");
+
         btn.value = "Save";
         btn.style.backgroundColor = "green";
-        btn.onclick = function()
-        {
+        btn.onclick = function() {
             let userToEdit = userIn;
             userToEdit.username = username.value;
             userToEdit.name = name1.value;
@@ -216,18 +202,16 @@ function newUserForm(userIn) {
             if(adminCheck.checked)
                 roles.push({"id":2,"name": "ROLE_ADMIN"});
             userToEdit.roles = roles;
-          //  console.log(user);
-
-
+            form.parentNode.removeChild(form);
             editUser(userToEdit);
+
+
         }
     }
 
     let tdb = trB.insertCell();
     tdb.appendChild(btn);
-
-    console.log(user);
-    body.appendChild(tbl);
+    body.appendChild(form);
 }
 
 function newUser() {
@@ -248,15 +232,16 @@ function newUser() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(user)
-    }).then(response=>console.log(response));
-
-
-
+    }).then(function (response1){
+        return response1.json();
+    }).then(function (data){
+        addUserRow(data);
+    });
 }
 
 
 function editUser(user){
-    id=user.id;
+    let  id=user.id;
     fetch(URL + id, {
         method: 'PUT',
         headers: {
@@ -264,8 +249,12 @@ function editUser(user){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(user)
-    }).then(response=>console.log(response));
-
-
+    }).then(function (response1){
+        return response1.json();
+    }).then(function (data){
+        addUserRow(data);
+    });
 }
+
+
 

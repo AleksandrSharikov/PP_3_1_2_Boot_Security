@@ -53,21 +53,16 @@ public class AdminController {
         return userService.getUserList();
     }
 
-   /* @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) {
-        System.out.println("Get user");
-        return userService.getById(id);
-    }*/
 
 
     @PostMapping(path = "/",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE    )
-    public String create(@RequestBody User newUser ) {
-     //   newUser.setPassword("default");
+    public User create(@RequestBody User newUser ) {
         System.out.println(newUser);
         userService.addUser(newUser);
-        return "Saved";
+        System.out.println(newUser);
+        return newUser;
     }
 
     @DeleteMapping(path = "/{id}")
@@ -79,9 +74,9 @@ public class AdminController {
     @PutMapping(path = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE    )
-    public String editUser(@PathVariable Long id, @RequestBody User editUser){
+    public User editUser(@PathVariable Long id, @RequestBody User editUser){
         userService.editUser(editUser,id);
-        return null;
+        return editUser;
     }
 
 
