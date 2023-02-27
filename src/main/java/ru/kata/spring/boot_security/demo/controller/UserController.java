@@ -27,7 +27,7 @@ public class UserController {
     @GetMapping("/")
     public ResponseEntity<User> getUser(Authentication authentication) {
 
-        return new ResponseEntity<>(userService.getById(((User) authentication.getPrincipal()).getId()), HttpStatus.OK);
+        return new ResponseEntity<>((User) authentication.getPrincipal(), HttpStatus.OK);
     }
 
 
