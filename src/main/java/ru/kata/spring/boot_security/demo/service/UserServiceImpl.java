@@ -49,8 +49,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void editUser(User user, Long id)  {
-        if(userDao.findUserByUsername(user.getUsername()) == null
-                 || userDao.findUserByUsername(user.getUsername()).equals(userDao.getById(id))) {
+        User userCheck = userDao.findUserByUsername(user.getUsername());
+        if(userCheck == null
+                 || userCheck.equals(userDao.getById(id))) {
         userDao.findById(id)
                 .ifPresent(u -> {u.setName(user.getName());
                                     u.setUsername(user.getUsername());

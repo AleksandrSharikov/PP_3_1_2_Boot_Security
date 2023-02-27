@@ -2,7 +2,8 @@ package ru.kata.spring.boot_security.demo.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -22,42 +23,28 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-   @RequestMapping(value = "/main")
-   public ModelAndView mainPage(){
-       ModelAndView modelAndView = new ModelAndView();
-       modelAndView.setViewName("/admin/main");
-       return modelAndView;
-    }
-
-
 
     @GetMapping("/")
-    public List<User> getList() {
-        return userService.getUserList();
+    public ResponseEntity<List<User>> getList() {
+        return new ResponseEntity<>(userService.getUserList(), HttpStatus.OK);
     }
 
 
 
-    @PostMapping(path = "/",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE    )
-    public User create(@RequestBody User newUser ) {
+    @PostMapping(path = "/")
+    public ResponseEntity<User> create(@RequestBody User newUser ) {
         userService.addUser(newUser);
-        return newUser;
+        return new ResponseEntity<>(newUser, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{id}")
-    public String deletUser(@PathVariable Long id) {
+    public ResponseEntity<String> deletUser(@PathVariable Long id) {
         userService.deletUser(id);
-        return "Deleted";
+        return new ResponseEntity<>("Deleted",HttpStatus.OK);
     }
-    @PutMapping(path = "/{id}",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE    )
-    public User editUser(@PathVariable Long id, @RequestBody User editUser){
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody User editUser){
         userService.editUser(editUser,id);
-        return editUser;
+        return new ResponseEntity<>(editUser, HttpStatus.OK);
     }
-
-
 }

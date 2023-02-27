@@ -2,7 +2,9 @@ package ru.kata.spring.boot_security.demo.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,30 +22,20 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/page")
-    public ModelAndView mainPage(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/user");
-        return modelAndView;
-    }
+
 
     @GetMapping("/")
-    public User getUser(Authentication authentication) {
-        System.out.println(userService.getById(((User) authentication.getPrincipal()).getId()));
-        System.out.println("get user 2");
-        System.out.println(userService.getById(2L));
-        return userService.getById(((User) authentication.getPrincipal()).getId());
+    public ResponseEntity<User> getUser(Authentication authentication) {
+
+        return new ResponseEntity<>(userService.getById(((User) authentication.getPrincipal()).getId()), HttpStatus.OK);
     }
 
 
-    @PutMapping(path = "/{id}",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE    )
-    public User editUser(@PathVariable Long id, @RequestBody User editUser){
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody User editUser){
         userService.editUser(editUser,id);
-        System.out.println("Edit");
-        System.out.println(userService.getById(2L));
-        return editUser;
+
+        return new ResponseEntity<>(editUser,HttpStatus.OK);
     }
 
 }
