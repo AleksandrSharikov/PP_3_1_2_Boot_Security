@@ -25,7 +25,7 @@ public class AdminController {
 
     @GetMapping("/")
     public ResponseEntity<List<User>> getList() {
-        return new ResponseEntity<>(userService.getUserList(), HttpStatus.OK);
+        return ResponseEntity.ok(userService.getUserList());
     }
 
 
@@ -33,17 +33,17 @@ public class AdminController {
     @PostMapping(path = "/")
     public ResponseEntity<User> create(@RequestBody User newUser ) {
         userService.addUser(newUser);
-        return new ResponseEntity<>(newUser, HttpStatus.OK);
+        return ResponseEntity.ok(newUser);
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<String> deletUser(@PathVariable Long id) {
         userService.deletUser(id);
-        return new ResponseEntity<>("Deleted",HttpStatus.OK);
+        return ResponseEntity.ok("Deleted");
     }
     @PutMapping(path = "/{id}")
     public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody User editUser){
         userService.editUser(editUser,id);
-        return new ResponseEntity<>(editUser, HttpStatus.OK);
+        return ResponseEntity.ok(editUser);
     }
 }

@@ -25,7 +25,7 @@ public class UserController {
     @GetMapping("/")
     public ResponseEntity<User> getUser(Authentication authentication) {
 
-        return new ResponseEntity<>((User) authentication.getPrincipal(), HttpStatus.OK);
+        return ResponseEntity.ok((User) authentication.getPrincipal());
     }
 
 
@@ -33,7 +33,7 @@ public class UserController {
     public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody User editUser){
         userService.editUser(editUser,id);
 
-        return new ResponseEntity<>(editUser,HttpStatus.OK);
+        return ResponseEntity.ok(editUser);
     }
 
 }
