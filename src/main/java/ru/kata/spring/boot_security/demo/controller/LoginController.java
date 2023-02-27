@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/")
 public class LoginController {
 
-
-   // public String rd() {        return "redirect:/login";    }
-  //  @GetMapping(value = "/")
     @GetMapping(value = {"/login","/"})
     public String login() {
         System.out.println("login");
