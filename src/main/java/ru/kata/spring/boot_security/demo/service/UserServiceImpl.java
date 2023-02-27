@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.model.User;
 
@@ -50,8 +49,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void editUser(User user, Long id)  {
-        System.out.println("edit in");
-        System.out.println(user);
         if(userDao.findUserByUsername(user.getUsername()) == null
                  || userDao.findUserByUsername(user.getUsername()).equals(userDao.getById(id))) {
         userDao.findById(id)

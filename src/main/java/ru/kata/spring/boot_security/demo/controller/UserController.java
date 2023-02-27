@@ -1,17 +1,15 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-@Controller
+@RestController
 @RequestMapping(value = "/user")
 public class UserController {
 
@@ -20,17 +18,32 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    @GetMapping(value = "/")
-    public String editUser(Model model) {
-        Authentication aut = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("user", aut.getPrincipal());
-        return "user";
+
+
+    @RequestMapping(value = "/page")
+    public ModelAndView mainPage(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/user");
+        return modelAndView;
     }
 
-    @PostMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") User user){
-        userService.editUser(user, user.getId());
-        return "user";
+    @GetMapping("/")
+    public User getUser(Authentication authentication) {
+        System.out.println(userService.getById(((User) authentication.getPrincipal()).getId()));
+        System.out.println("get user 2");
+        System.out.println(userService.getById(2L));
+        return userService.getById(((User) authentication.getPrincipal()).getId());
+    }
+
+
+    @PutMapping(path = "/{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE    )
+    public User editUser(@PathVariable Long id, @RequestBody User editUser){
+        userService.editUser(editUser,id);
+        System.out.println("Edit");
+        System.out.println(userService.getById(2L));
+        return editUser;
     }
 
 }

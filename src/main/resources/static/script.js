@@ -4,6 +4,7 @@ const body = document.body,
 tbl = document.getElementById('html-data-table');
 
 let URL = 'http://localhost:8080/admin/';
+let userURL='http://localhost:8080/user/';
 
 let roles = [];
 let user = {id:"",password:"",name:"",username:"",roles};
@@ -258,3 +259,113 @@ function editUser(user){
 
 
 
+function editUser1(user){
+    let  id=user.id;
+    fetch(userURL + id, {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    });
+}
+
+
+
+
+
+function userPage() {
+
+    fetch(userURL)
+        .then(function (response) {
+            return response.json();
+        }).then(function (data) {
+        userTable(data)
+    });
+}
+
+function userTable(userIn){
+    console.log(userIn);
+    const body = document.body,
+        form = document.createElement('table');
+    form.style.width = '100px';
+    form.style.border = '1px solid black';
+
+    const tr = form.insertRow();
+    const td = tr.insertCell();
+    td.appendChild(document.createTextNode('Name'))
+    const td1 = tr.insertCell();
+    td1.appendChild(name1 = document.createElement("input"));
+
+    const tr2 = form.insertRow();
+    const td2 = tr2.insertCell();
+    td2.appendChild(document.createTextNode('Username'))
+    const td3 = tr2.insertCell();
+    td3.appendChild(username = document.createElement("input"));
+
+
+    const tr3 = form.insertRow();
+    const td4 = tr3.insertCell();
+    td4.appendChild(document.createTextNode('Password'))
+    const td5 = tr3.insertCell();
+    td5.appendChild(password = document.createElement("input"));
+
+
+
+
+    const trCheck = form.insertRow();
+    userCheck = document.createElement('input')
+    userCheck.type = "checkbox";
+   // userCheck.checked = true;
+    let tdUser = trCheck.insertCell();
+    tdUser.appendChild(userCheck);
+
+    adminCheck = document.createElement('input')
+    adminCheck.type = "checkbox";
+    adminCheck.disabled = true;
+    let tdAdmin = trCheck.insertCell();
+    tdAdmin.appendChild(adminCheck);
+
+    const trB = form.insertRow();
+    let btn = document.createElement('input');
+    btn.type = "button";
+    btn.className = "btn";
+    btn.value = "Add";
+    btn.style.backgroundColor = "red";
+    btn.style.color = "white";
+
+
+    {
+        username.value = userIn.username;
+        password.value = userIn.password;
+        name1.value = userIn.name;
+
+        userCheck.checked = userIn.roles.some(e => e.name === "ROLE_USER");
+        adminCheck.checked = userIn.roles.some(e => e.name === "ROLE_ADMIN");
+
+        btn.value = "Save";
+        btn.style.backgroundColor = "green";
+        btn.onclick = function() {
+            let userToEdit = userIn;
+            userToEdit.username = username.value;
+            userToEdit.name = name1.value;
+            userToEdit.password = password.value;
+
+            if(userCheck.checked)
+                roles.push({"id":1,"name": "ROLE_USER"});
+            if(adminCheck.checked)
+                roles.push({"id":2,"name": "ROLE_ADMIN"});
+            userToEdit.roles = roles;
+            {editUser1(userToEdit);
+            console.log('edit')}
+
+
+
+        }
+    }
+
+    let tdb = trB.insertCell();
+    tdb.appendChild(btn);
+    body.appendChild(form);
+}

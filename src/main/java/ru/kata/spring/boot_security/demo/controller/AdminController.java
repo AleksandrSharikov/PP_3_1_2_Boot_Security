@@ -29,27 +29,10 @@ public class AdminController {
        return modelAndView;
     }
 
-    @RequestMapping(value = "/form")
-    public ModelAndView userForm(){
-        System.out.println("UserForm");
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/admin/newUser");
-        return modelAndView;
-    }
 
-
-    // Edit form
-    @RequestMapping(value = "/{id}")
-    public ModelAndView userForm(@PathVariable Long id){
-        System.out.println("EditForm");
-        ModelAndView modelAndView2 = new ModelAndView();
-        modelAndView2.setViewName("/admin/editUser");
-        return modelAndView2;
-    }
 
     @GetMapping("/")
     public List<User> getList() {
-        System.out.println("Get list");
         return userService.getUserList();
     }
 
@@ -59,16 +42,13 @@ public class AdminController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE    )
     public User create(@RequestBody User newUser ) {
-        System.out.println(newUser);
         userService.addUser(newUser);
-        System.out.println(newUser);
         return newUser;
     }
 
     @DeleteMapping(path = "/{id}")
     public String deletUser(@PathVariable Long id) {
         userService.deletUser(id);
-        System.out.println("Delete");
         return "Deleted";
     }
     @PutMapping(path = "/{id}",
